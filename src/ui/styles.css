@@ -81,24 +81,25 @@ nav a.active {
 }
 
 .stat-value {
-  font-size: 72px;
+  font-size: 96px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .stat-label {
-  font-size: 14px;
+  font-size: 18px;
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: 4px;
+  margin-top: 6px;
+  font-weight: 300;
 }
 
 .stat-value.bpm { color: var(--red); }
 .stat-value.jumps { color: var(--blue); }
-.stat-value.timer { font-size: 48px; }
-.stat-value.countdown { font-size: 120px; color: var(--green); }
+.stat-value.timer { font-size: 96px; }
+.stat-value.countdown { font-size: 96px; color: var(--green); }
 
 .ble-status {
   font-size: 12px;
@@ -118,10 +119,10 @@ nav a.active {
 
 .btn {
   flex: 1;
-  padding: 16px;
+  padding: 18px;
   border: none;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   text-transform: uppercase;
