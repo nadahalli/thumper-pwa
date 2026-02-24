@@ -92,7 +92,7 @@
         <input type="range" id="sensitivity-slider" min="1000" max="20000" step="500">
         <div class="setting-value" id="sensitivity-value"></div>
       </div>
-      <button class="btn btn-secondary" id="btn-close-settings">Close</button>
+      <button class="btn btn-secondary btn-centered" id="btn-close-settings">Close</button>
     </div>
   `;const O=w.querySelector("#sensitivity-slider"),_=w.querySelector("#sensitivity-value"),K=w.querySelector("#btn-close-settings");return O.value=String(S.sensitivity),_.textContent=String(S.sensitivity),O.addEventListener("input",()=>{const C=Number(O.value);S.setSensitivity(C),_.textContent=String(C)}),K.addEventListener("click",()=>{w.classList.remove("open")}),w}function Ui(){document.getElementById("settings-dialog")?.classList.add("open")}const qn=new Ii,yt=document.getElementById("app");yt.innerHTML=`
   <nav>
