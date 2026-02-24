@@ -59,8 +59,8 @@
         <p>${_.join(" / ")}</p>
       </div>
       <div class="history-actions">
-        <button class="btn-icon btn-export" data-id="${S.id}">TCX</button>
-        <button class="btn-icon btn-delete" data-id="${S.id}">Del</button>
+        <button class="btn-export" data-id="${S.id}">Export TCX</button>
+        <button class="btn-icon btn-delete" data-id="${S.id}">&#x1F5D1;</button>
       </div>
     </div>
   `}function Ni(S){async function w(){const T=await be.workouts.orderBy("startTimeMillis").reverse().toArray();if(T.length===0){S.innerHTML='<div class="history-empty">No workouts yet. Start jumping!</div>';return}S.innerHTML=`
@@ -74,7 +74,7 @@
     <div class="dialog">
       <h2>Workout Summary</h2>
       <div id="summary-rows"></div>
-      <button class="btn btn-start" id="btn-dismiss">Done</button>
+      <button class="btn btn-start btn-centered" id="btn-dismiss">Done</button>
     </div>
   `;const T=w.querySelector("#summary-rows");return w.querySelector("#btn-dismiss").addEventListener("click",()=>S.dismissSummary()),S.subscribe(()=>{const A=S.summary;if(A){let j=pt("Duration",Cr(A.durationSeconds));j+=pt("Jump Time",Cr(A.jumpTimeSeconds)),A.jumpCount!=null&&(j+=pt("Jumps",String(A.jumpCount))),A.jumpsPerMinute!=null&&(j+=pt("Jumps/min",A.jumpsPerMinute.toFixed(1))),A.avgHeartRate!=null&&(j+=pt("Avg HR",`${A.avgHeartRate} bpm`)),T.innerHTML=j,w.classList.add("open")}else w.classList.remove("open")}),w}function Fi(S){const w=document.createElement("div");w.className="dialog-overlay",w.id="settings-dialog",w.innerHTML=`
     <div class="dialog">
