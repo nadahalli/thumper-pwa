@@ -122,6 +122,26 @@ export function createWorkoutScreen(
     controls.querySelector('#btn-stop')?.addEventListener('click', () => state.stop());
   }
 
+  const statsContainer = container.querySelector<HTMLElement>('.workout-stats')!;
+  const statValues = container.querySelectorAll<HTMLElement>('.stat-value');
+
+  function sizeStats(): void {
+    const available = statsContainer.clientHeight;
+    // 3 stat blocks share the space; each label is ~24px, gaps ~24px each (3 gaps).
+    // Reserve space for labels (3 * 24) + gaps (2 * 24) + ble status (~28).
+    const reserved = 3 * 24 + 2 * 24 + 28;
+    const perStat = Math.floor((available - reserved) / 3);
+    // Font size ~= 80% of the block height (line-height is 1)
+    const fontSize = Math.max(32, Math.min(perStat * 0.8, 160));
+    for (const el of statValues) {
+      el.style.fontSize = `${fontSize}px`;
+    }
+  }
+
+  window.addEventListener('resize', sizeStats);
+  // Initial sizing after first paint
+  requestAnimationFrame(sizeStats);
+
   state.subscribe(render);
   render();
 }
