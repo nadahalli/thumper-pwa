@@ -60,8 +60,8 @@ function renderItem(workout: Workout): string {
         <p>${parts.join(' / ')}</p>
       </div>
       <div class="history-actions">
-        <button class="btn-icon btn-export" data-id="${workout.id}">TCX</button>
-        <button class="btn-icon btn-delete" data-id="${workout.id}">Del</button>
+        <button class="btn-export" data-id="${workout.id}">Export TCX</button>
+        <button class="btn-icon btn-delete" data-id="${workout.id}">&#x1F5D1;</button>
       </div>
     </div>
   `;

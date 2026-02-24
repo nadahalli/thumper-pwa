@@ -17,7 +17,7 @@ export function createSummaryDialog(state: WorkoutState): HTMLElement {
     <div class="dialog">
       <h2>Workout Summary</h2>
       <div id="summary-rows"></div>
-      <button class="btn btn-start" id="btn-dismiss">Done</button>
+      <button class="btn btn-start btn-centered" id="btn-dismiss">Done</button>
     </div>
   `;
 
