@@ -32,8 +32,8 @@ export function createWorkoutScreen(
         <div class="stat-value timer" id="timer-value">0:00</div>
         <div class="stat-label">Time</div>
       </div>
-      <div class="ble-status" id="ble-status"></div>
     </div>
+    <div class="ble-status" id="ble-status"></div>
     <div class="controls" id="workout-controls">
       <button class="btn btn-start" id="btn-start">Start</button>
     </div>
@@ -127,19 +127,16 @@ export function createWorkoutScreen(
 
   function sizeStats(): void {
     const available = statsContainer.clientHeight;
-    // 3 stat blocks share the space; each label is ~24px, gaps ~24px each (3 gaps).
-    // Reserve space for labels (3 * 24) + gaps (2 * 24) + ble status (~28).
-    const reserved = 3 * 24 + 2 * 24 + 28;
-    const perStat = Math.floor((available - reserved) / 3);
-    // Font size ~= 80% of the block height (line-height is 1)
-    const fontSize = Math.max(32, Math.min(perStat * 0.8, 160));
+    // Each stat gets 1/3 of the container via flex:1.
+    // Within each third, the label is ~24px. The rest is for the number.
+    const perStat = Math.floor(available / 3);
+    const fontSize = Math.max(32, Math.min(perStat - 30, 160));
     for (const el of statValues) {
       el.style.fontSize = `${fontSize}px`;
     }
   }
 
   window.addEventListener('resize', sizeStats);
-  // Initial sizing after first paint
   requestAnimationFrame(sizeStats);
 
   state.subscribe(render);
