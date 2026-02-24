@@ -254,6 +254,25 @@ nav a.active {
   width: 60%;
 }
 
+.summary-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.summary-buttons .btn {
+  margin-top: 0;
+}
+
+.confirm-text {
+  font-size: 14px;
+  color: var(--red);
+  text-align: center;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
 /* Settings */
 .setting-group {
   margin-bottom: 16px;

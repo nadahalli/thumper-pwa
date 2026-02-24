@@ -17,14 +17,39 @@ export function createSummaryDialog(state: WorkoutState): HTMLElement {
     <div class="dialog">
       <h2>Workout Summary</h2>
       <div id="summary-rows"></div>
-      <button class="btn btn-start btn-centered" id="btn-dismiss">Done</button>
+      <div class="summary-buttons" id="summary-main-buttons">
+        <button class="btn btn-start" id="btn-save">Save</button>
+        <button class="btn btn-stop" id="btn-discard">Discard</button>
+      </div>
+      <div class="summary-buttons" id="summary-confirm-buttons" style="display:none">
+        <p class="confirm-text">Are you sure? This workout will be lost.</p>
+        <button class="btn btn-stop" id="btn-confirm-discard">Discard</button>
+        <button class="btn btn-secondary" id="btn-cancel-discard">Cancel</button>
+      </div>
     </div>
   `;
 
   const rows = overlay.querySelector<HTMLElement>('#summary-rows')!;
-  const btnDismiss = overlay.querySelector<HTMLButtonElement>('#btn-dismiss')!;
+  const mainButtons = overlay.querySelector<HTMLElement>('#summary-main-buttons')!;
+  const confirmButtons = overlay.querySelector<HTMLElement>('#summary-confirm-buttons')!;
 
-  btnDismiss.addEventListener('click', () => state.dismissSummary());
+  overlay.querySelector('#btn-save')!.addEventListener('click', () => state.saveWorkout());
+
+  overlay.querySelector('#btn-discard')!.addEventListener('click', () => {
+    mainButtons.style.display = 'none';
+    confirmButtons.style.display = '';
+  });
+
+  overlay.querySelector('#btn-confirm-discard')!.addEventListener('click', () => {
+    confirmButtons.style.display = 'none';
+    mainButtons.style.display = '';
+    state.discardWorkout();
+  });
+
+  overlay.querySelector('#btn-cancel-discard')!.addEventListener('click', () => {
+    confirmButtons.style.display = 'none';
+    mainButtons.style.display = '';
+  });
 
   state.subscribe(() => {
     const s = state.summary;
@@ -35,6 +60,9 @@ export function createSummaryDialog(state: WorkoutState): HTMLElement {
       if (s.jumpsPerMinute != null) html += row('Jumps/min', s.jumpsPerMinute.toFixed(1));
       if (s.avgHeartRate != null) html += row('Avg HR', `${s.avgHeartRate} bpm`);
       rows.innerHTML = html;
+      // Reset to main buttons view
+      mainButtons.style.display = '';
+      confirmButtons.style.display = 'none';
       overlay.classList.add('open');
     } else {
       overlay.classList.remove('open');

@@ -171,7 +171,7 @@ export class WorkoutState {
     // Collect final sample
     this.collectSample();
 
-    // Compute summary
+    // Compute summary (don't persist yet, wait for save/discard)
     this.summary = computeSummary(
       this.elapsedSeconds,
       this.hrReadings,
@@ -179,7 +179,12 @@ export class WorkoutState {
       this.analyzer.jumpTimeMs,
     );
 
-    // Persist workout
+    this.notify();
+  }
+
+  async saveWorkout(): Promise<void> {
+    if (!this.summary) return;
+
     this.workoutId = await db.workouts.add({
       startTimeMillis: this.startTimeMs,
       durationSeconds: this.elapsedSeconds,
@@ -188,17 +193,18 @@ export class WorkoutState {
       jumpTimeSeconds: this.summary.jumpTimeSeconds,
     });
 
-    // Persist samples
     const samplesWithWorkoutId = this.samples.map((s) => ({
       ...s,
       workoutId: this.workoutId!,
     }));
     await db.workout_samples.bulkAdd(samplesWithWorkoutId);
 
+    this.summary = null;
+    this.phase = 'idle';
     this.notify();
   }
 
-  dismissSummary(): void {
+  discardWorkout(): void {
     this.summary = null;
     this.phase = 'idle';
     this.notify();
